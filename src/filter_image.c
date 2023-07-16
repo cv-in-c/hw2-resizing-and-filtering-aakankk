@@ -193,7 +193,25 @@ image make_gaussian_filter(float sigma)
 
 image add_image(image a, image b)
 {
-    
+    assert(a.w == b.w && a.h == b.h && a.c == b.c);
+
+    image newimage = make_image(a.w, a.h, a.c);
+
+    for (int c = 0; c < a.c; c++) 
+    {
+        for (int h = 0; h < a.h; h++) 
+        {
+            for (int w = 0; w < a.w; w++) 
+            {
+                float value1 = get_pixel(a, w, h, c);
+                float value2 = get_pixel(b, w, h, c);
+                set_pixel(newimage, w, h, c, value1 + value2);
+            }
+        }
+    }
+
+    return newimage;
+}
 
 image sub_image(image a, image b)
 {
