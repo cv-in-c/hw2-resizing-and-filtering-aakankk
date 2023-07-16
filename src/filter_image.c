@@ -8,7 +8,29 @@
 
 void l1_normalize(image im)
 {
-    // TODO
+    float total = 0;
+    for (int c = 0; c < im.c; c++) 
+    {
+        for (int h = 0; h < im.h; h++) 
+        {
+            for (int w = 0; w < im.w; w++) 
+            {
+                total += get_pixel(im, w, h, c);
+            }
+        }
+    }
+
+    for (int c = 0; c < im.c; c++) 
+    {
+        for (int h = 0; h < im.h; h++) 
+        {
+            for (int w = 0; w < im.w; w++) 
+            {
+                float temp = get_pixel(im, w, h, c) / total;
+                set_pixel(im, w, h, c, temp);
+            }
+        }
+    }
 }
 
 image make_box_filter(int w)
