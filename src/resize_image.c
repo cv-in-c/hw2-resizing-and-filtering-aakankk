@@ -34,13 +34,27 @@ image nn_resize(image im, int w, int h)
 
 float bilinear_interpolate(image im, float x, float y, int c)
 {
-    // TODO
-    return 0;
+    int a1 = (int)floorf(x);
+    int b1 = (int)floorf(y);
+    int a2 = a1 + 1;
+    int b2 = b1 + 1;
+
+    float q11 = get_pixel(im, a1, b1, c);
+    float q12 = get_pixel(im, a1, b2, c);
+    float q21 = get_pixel(im, a2, b1, c);
+    float q22 = get_pixel(im, a2, b2, c);
+
+    float dx = x - a1;
+    float dy = y - b1;
+
+    float temp = ((1 - dx) * (1 - dy) * q11 ) + ( dx * (1 - dy) * q21) + ((1 - dx) * dy * q12) + (dx * dy * q22);
+
+    return temp;
 }
 
 image bilinear_resize(image im, int w, int h)
 {
-    // TODO
+    
     return make_image(1,1,1);
 }
 
