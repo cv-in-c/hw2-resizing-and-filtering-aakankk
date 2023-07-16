@@ -1,10 +1,12 @@
 #include <math.h>
 #include "image.h"
 
-float nn_interpolate(image im, float x, float y, int c)
+float nn_interpolate(image im, float x, float y, int a)
 {
-    // TODO Fill in
-    return 0;
+    int near_x = (int)roundf(x);
+    int near_y = (int)roundf(y);
+    
+    return get_pixel(im, near_x, near_y, a);
 }
 
 image nn_resize(image im, int w, int h)
