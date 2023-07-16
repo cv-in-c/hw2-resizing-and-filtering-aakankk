@@ -159,15 +159,36 @@ image make_emboss_filter()
 
 image make_gaussian_filter(float sigma)
 {
-    // TODO
-    return make_image(1,1,1);
+    int size = (int)ceilf(6 * sigma);
+    
+    if (size % 2 == 0)
+    {
+        size++; 
+    }
+
+    image filter = make_image(size, size, 1);
+
+    float total = 0;
+    int mid = size / 2;
+    
+    for (int h = -mid; h <= mid; h++) 
+    {
+        for (int w = -mid; w <= mid; w++) 
+        {
+            float x = w;
+            float y = h;
+            
+            float temp = expf(-(x * x + y * y) / (2 * sigma * sigma)) / (2 * 3.141 * sigma * sigma);
+            
+            total += temp;
+            
+            set_pixel(filter, w + mid, h + mid, 0, temp);
+        }
 }
 
 image add_image(image a, image b)
 {
-    // TODO
-    return make_image(1,1,1);
-}
+    
 
 image sub_image(image a, image b)
 {
