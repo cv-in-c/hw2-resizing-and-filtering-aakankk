@@ -184,6 +184,11 @@ image make_gaussian_filter(float sigma)
             
             set_pixel(filter, w + mid, h + mid, 0, temp);
         }
+    }
+
+    l1_normalize(filter);
+
+    return filter;
 }
 
 image add_image(image a, image b)
