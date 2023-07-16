@@ -115,8 +115,21 @@ image make_highpass_filter()
 
 image make_sharpen_filter()
 {
-    // TODO
-    return make_image(1,1,1);
+    image filter = make_image(3, 3, 1);
+
+    set_pixel(filter, 0, 0, 0, 0);
+    set_pixel(filter, 1, 0, 0, -1);
+    set_pixel(filter, 2, 0, 0, 0);
+
+    set_pixel(filter, 0, 1, 0, -1);
+    set_pixel(filter, 1, 1, 0, 5);
+    set_pixel(filter, 2, 1, 0, -1);
+
+    set_pixel(filter, 0, 2, 0, 0);
+    set_pixel(filter, 1, 2, 0, -1);
+    set_pixel(filter, 2, 2, 0, 0);
+
+    return filter;
 }
 
 image make_emboss_filter()
