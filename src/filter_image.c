@@ -52,14 +52,65 @@ image make_box_filter(int w)
 
 image convolve_image(image im, image filter, int preserve)
 {
-    // TODO
-    return make_image(1,1,1);
+    assert(filter.c == im.c || filter.c == 1);
+
+    int ch = preserve ? im.c : 1;
+    image newimage = make_image(im.w, im.h, ch);
+
+    for (int c = 0; c < ch; c++) 
+    {
+        for (int h = 0; h < im.h; h++) 
+        {
+            for (int w = 0; w < im.w; w++) 
+            {
+
+                
+                float total = 0;
+                for (int fc = 0; fc < filter.c; fc++) 
+                {
+                    for (int fh = 0; fh < filter.h; fh++) 
+                    {
+                        for (int fw = 0; fw < filter.w; fw++) 
+                        {
+                            int im_c = preserve ? c : 0;
+                            int im_h = h + fh - filter.h / 2;
+                            int im_w = w + fw - filter.w / 2;
+                            
+                            float im_val = get_pixel(im, im_w, im_h, im_c);
+                            float filter_val = get_pixel(filter, fw, fh, fc);
+                            
+                            total = total + (im_val * filter_val);
+                        }
+                    }
+                }
+                
+                set_pixel(newimage, w, h, c, total);
+
+                
+            }
+        }
+    }
+
+    return newimage;
 }
 
 image make_highpass_filter()
 {
-    // TODO
-    return make_image(1,1,1);
+    image filter = make_image(3, 3, 1);
+
+    set_pixel(filter, 0, 0, 0, 0);
+    set_pixel(filter, 1, 0, 0, -1);
+    set_pixel(filter, 2, 0, 0, 0);
+
+    set_pixel(filter, 0, 1, 0, -1);
+    set_pixel(filter, 1, 1, 0, 4);
+    set_pixel(filter, 2, 1, 0, -1);
+
+    set_pixel(filter, 0, 2, 0, 0);
+    set_pixel(filter, 1, 2, 0, -1);
+    set_pixel(filter, 2, 2, 0, 0);
+
+    return filter;
 }
 
 image make_sharpen_filter()
