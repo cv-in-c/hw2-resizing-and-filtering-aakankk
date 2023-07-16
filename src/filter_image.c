@@ -152,10 +152,13 @@ image make_emboss_filter()
 }
 
 // Question 2.2.1: Which of these filters should we use preserve when we run our convolution and which ones should we not? Why?
-// Answer: TODO
+// Answer: In the markdown file, it is advised to set "preserve" to 1 in box filters to effectively remove noise and process each channel independently. 
+//Conversely, for highpass, sharpen, and emboss filters that primarily target edges rather than individual channel values, it is optional to set "preserve"
+//as the filter values remain constant regardless.
 
 // Question 2.2.2: Do we have to do any post-processing for the above filters? Which ones and why?
-// Answer: TODO
+// Answer: In my understanding, box filters generally don't require post-processing since their values remain above 0. 
+//However, in other filters like highpass, sharpen, and emboss, the values can go negative, so it may be necessary to apply scaling accordingly.
 
 image make_gaussian_filter(float sigma)
 {
